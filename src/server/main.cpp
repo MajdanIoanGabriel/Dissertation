@@ -1,7 +1,11 @@
-#include "server_hello.hpp"
+#include "socket/SocketServer.hpp"
 
 int main () 
 {
-    server::hello();
+    SocketServer socketServer(3333);
+    while(true) {
+        socketServer.listenForConnections();
+    }
+
     return 0;
 }
