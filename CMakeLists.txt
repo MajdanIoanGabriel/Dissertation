@@ -1,8 +1,5 @@
 cmake_minimum_required( VERSION 3.0.2 )
 
-set (CMAKE_C_COMPILER x86_64-w64-mingw32-gcc)
-set (CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
-
 project( Dissertation )
 
 set( CLIENT_SRC_DIR ${CMAKE_SOURCE_DIR}/src/client)
@@ -22,8 +19,6 @@ set( SERVER_SRCS
 
 add_executable( client ${CLIENT_SRCS} ${CLIENT_HEADERS} )
 target_include_directories(client PRIVATE ${CLIENT_INCLUDE_DIR})
-target_link_libraries(client wsock32 ws2_32)
 
 add_executable( server ${SERVER_SRCS} ${SERVER_HEADERS} )
 target_include_directories(server PRIVATE ${SERVER_INCLUDE_DIR})
-target_link_libraries(server wsock32 ws2_32)

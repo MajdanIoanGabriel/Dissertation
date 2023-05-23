@@ -2,9 +2,6 @@
 
 SocketServer::SocketServer(int port) {
     // Create a socket
-    wVersionRequested = MAKEWORD(2, 2);
-    int err = WSAStartup(wVersionRequested, &wsaData);
-
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket < 0) {
         std::cerr << "Failed to create socket." << std::endl;
@@ -64,7 +61,6 @@ void SocketServer::receiveMessage() {
 
 void SocketServer::closeConnection() {
     // Close the connection and sockets
-    closesocket(clientSocket);
-    closesocket(serverSocket);
-    WSACleanup();
+    close(clientSocket);
+    close(serverSocket);
 }

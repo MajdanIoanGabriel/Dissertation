@@ -2,8 +2,9 @@
 #define SOCKET_SERVER_HPP
 
 #include <iostream>
-#include <ws2tcpip.h>
-#include <winsock.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
 
 class SocketServer {
 private:
@@ -11,8 +12,6 @@ private:
     int clientSocket;
     sockaddr_in serverAddress;
     sockaddr_in clientAddress;
-    WORD wVersionRequested;
-    WSADATA wsaData;
 
 public:
     SocketServer(int port);
