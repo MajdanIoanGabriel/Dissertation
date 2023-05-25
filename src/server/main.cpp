@@ -4,7 +4,10 @@ int main ()
 {
     SocketServer socketServer(3333);
     while(true) {
-        socketServer.listenForConnections();
+        if (socketServer.listenForConnections()) {
+            socketServer.receiveMessage();
+            socketServer.sendMessage("Good, you?");
+        }
     }
 
     return 0;

@@ -7,8 +7,12 @@ set( CLIENT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/client)
 set( SERVER_SRC_DIR ${CMAKE_SOURCE_DIR}/src/server)
 set( SERVER_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/server)
 
-set( CLIENT_HEADERS ${CLIENT_INCLUDE_DIR}/client_hello.hpp )
-set( CLIENT_SRCS ${CLIENT_SRC_DIR}/main.cpp )
+set( CLIENT_HEADERS 
+    ${CLIENT_INCLUDE_DIR}/client_hello.hpp
+    ${CLIENT_INCLUDE_DIR}/socket/SocketClient.hpp )
+set( CLIENT_SRCS 
+    ${CLIENT_SRC_DIR}/main.cpp
+    ${CLIENT_SRC_DIR}/socket/SocketClient.cpp )
 
 set( SERVER_HEADERS 
     ${SERVER_INCLUDE_DIR}/server_hello.hpp

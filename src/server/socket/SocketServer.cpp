@@ -21,14 +21,17 @@ SocketServer::SocketServer(int port) {
 }
 
 SocketServer::~SocketServer() {
-    closeConnection();
+    if (clientSocket < 0) {
+        close(clientSocket);
+    }
+    close(serverSocket);
 }
 
-void SocketServer::listenForConnections() {
+bool SocketServer::listenForConnections() {
     // Listen for client connections
     if (listen(serverSocket, 1) < 0) {
         std::cerr << "Failed to listen for connections." << std::endl;
-        exit(1);
+        return false;
     }
 
     std::cout << "Server listening for connections..." << std::endl;
@@ -38,19 +41,20 @@ void SocketServer::listenForConnections() {
     clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddress, &clientAddressSize);
     if (clientSocket < 0) {
         std::cerr << "Failed to accept client connection." << std::endl;
-        exit(1);
+        return false;
     }
 
     std::cout << "Client connected." << std::endl;
+    return true;
 }
 
-void SocketServer::sendMessage(const std::string& message) {
+void SocketServer::sendMessage(const std::string message) {
     // Send message to the client
-    send(clientSocket, message.c_str(), message.length(), 0);
+    send(clientSocket, message.c_str(), message.length()+1, 0);
 }
 
 void SocketServer::receiveMessage() {
-    char *buffer;
+    char buffer[1024];
 
     // Receive message from the client
     int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
@@ -60,7 +64,7 @@ void SocketServer::receiveMessage() {
 }
 
 void SocketServer::closeConnection() {
-    // Close the connection and sockets
+    // Close the client connection
     close(clientSocket);
-    close(serverSocket);
+    std::cout << "Closed connection to client." << std::endl;
 }
