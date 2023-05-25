@@ -50,6 +50,7 @@ bool SocketServer::listenForConnections() {
 
 void SocketServer::sendMessage(const std::string message) {
     // Send message to the client
+    std::cout << "Sending message to client: " << message << std::endl;
     send(clientSocket, message.c_str(), message.length()+1, 0);
 }
 

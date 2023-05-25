@@ -33,6 +33,7 @@ void SocketClient::connectToServer() {
 
 void SocketClient::sendMessage(const std::string message) {
     // Send message to the server
+    std::cout << "Sending message to server: " << message << std::endl;
     send(clientSocket, message.c_str(), message.length()+1, 0);
 }
 
