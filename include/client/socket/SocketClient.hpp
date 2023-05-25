@@ -1,23 +1,22 @@
-#ifndef SOCKET_SERVER_HPP
-#define SOCKET_SERVER_HPP
+#ifndef SOCKET_CLIENT_HPP
+#define SOCKET_CLIENT_HPP
 
 #include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <unistd.h>
 
-class SocketServer {
+class SocketClient {
 private:
-    int serverSocket;
     int clientSocket;
     sockaddr_in serverAddress;
-    sockaddr_in clientAddress;
 
 public:
-    SocketServer(int port);
-    ~SocketServer();
+    SocketClient(const std::string ipAddress, int port);
+    ~SocketClient();
 
-    bool listenForConnections();
+    void connectToServer();
     void sendMessage(const std::string& message);
     void receiveMessage();
     void closeConnection();

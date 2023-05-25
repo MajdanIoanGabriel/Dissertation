@@ -2,9 +2,6 @@
 
 SocketServer::SocketServer(int port) {
     // Create a socket
-    wVersionRequested = MAKEWORD(2, 2);
-    int err = WSAStartup(wVersionRequested, &wsaData);
-
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket < 0) {
         std::cerr << "Failed to create socket." << std::endl;
@@ -24,14 +21,17 @@ SocketServer::SocketServer(int port) {
 }
 
 SocketServer::~SocketServer() {
-    closeConnection();
+    if (clientSocket < 0) {
+        close(clientSocket);
+    }
+    close(serverSocket);
 }
 
-void SocketServer::listenForConnections() {
+bool SocketServer::listenForConnections() {
     // Listen for client connections
     if (listen(serverSocket, 1) < 0) {
         std::cerr << "Failed to listen for connections." << std::endl;
-        exit(1);
+        return false;
     }
 
     std::cout << "Server listening for connections..." << std::endl;
@@ -41,30 +41,44 @@ void SocketServer::listenForConnections() {
     clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddress, &clientAddressSize);
     if (clientSocket < 0) {
         std::cerr << "Failed to accept client connection." << std::endl;
-        exit(1);
+        return false;
     }
 
     std::cout << "Client connected." << std::endl;
+    return true;
 }
 
 void SocketServer::sendMessage(const std::string& message) {
     // Send message to the client
-    send(clientSocket, message.c_str(), message.length(), 0);
+    std::cout << "Sending message to client: " << message << std::endl;
+    send(clientSocket, message.c_str(), message.size(), 0);
 }
 
 void SocketServer::receiveMessage() {
-    char *buffer;
+    size_t remainingBytes{0}, msgSize{0};
+
+    // Receive message size from the client
+    int bytesRead = recv(clientSocket, &msgSize, sizeof(msgSize), 0);
+    char *buffer = new char[msgSize];
+    remainingBytes = msgSize;
 
     // Receive message from the client
-    int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-    if (bytesRead > 0) {
-        std::cout << "Received message from client: " << buffer << std::endl;
+    while (remainingBytes > 0) {
+        bytesRead = recv(clientSocket, buffer, msgSize, 0);
+        if (bytesRead <= 0) {
+            break;
+        }
+
+        remainingBytes -= bytesRead;
     }
+
+    std::cout << "Received message from client (" << msgSize << " bytes). " << std::endl;
+
+    delete[] buffer;
 }
 
 void SocketServer::closeConnection() {
-    // Close the connection and sockets
-    closesocket(clientSocket);
-    closesocket(serverSocket);
-    WSACleanup();
+    // Close the client connection
+    close(clientSocket);
+    std::cout << "Closed connection to client." << std::endl;
 }
