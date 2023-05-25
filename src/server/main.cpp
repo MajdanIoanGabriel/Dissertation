@@ -1,12 +1,15 @@
 #include "socket/SocketServer.hpp"
 
+#define PORT 3333
+
 int main () 
 {
-    SocketServer socketServer(3333);
+    SocketServer socketServer(PORT);
     while(true) {
         if (socketServer.listenForConnections()) {
             socketServer.receiveMessage();
-            socketServer.sendMessage("Good, you?");
+            socketServer.sendMessage("Message received.");
+            socketServer.closeConnection();
         }
     }
 

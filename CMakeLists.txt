@@ -9,6 +9,7 @@ set( SERVER_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/server)
 
 set( CLIENT_HEADERS 
     ${CLIENT_INCLUDE_DIR}/socket/SocketClient.hpp
+    ${CLIENT_INCLUDE_DIR}/utils/Defines.hpp
     ${CLIENT_INCLUDE_DIR}/utils/Timer.hpp )
 set( CLIENT_SRCS 
     ${CLIENT_SRC_DIR}/main.cpp

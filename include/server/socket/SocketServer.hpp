@@ -18,7 +18,7 @@ public:
     ~SocketServer();
 
     bool listenForConnections();
-    void sendMessage(const std::string message);
+    void sendMessage(const std::string& message);
     void receiveMessage();
     void closeConnection();
 };

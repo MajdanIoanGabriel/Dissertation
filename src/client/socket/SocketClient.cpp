@@ -31,10 +31,16 @@ void SocketClient::connectToServer() {
     std::cout << "Connected to the server." << std::endl;
 }
 
-void SocketClient::sendMessage(const std::string message) {
+void SocketClient::sendMessage(const std::string& message) {
+    size_t size = message.size();
+
+    // Send message size to the server
+    std::cout << "Sending message size to server... (" << size << ")" << std::endl;
+    send(clientSocket, &size, sizeof(size), 0);
+
     // Send message to the server
-    std::cout << "Sending message to server: " << message << std::endl;
-    send(clientSocket, message.c_str(), message.length()+1, 0);
+    std::cout << "Sending message to server..." << std::endl;
+    send(clientSocket, message.c_str(), size, 0);
 }
 
 void SocketClient::receiveMessage() {
@@ -43,7 +49,7 @@ void SocketClient::receiveMessage() {
     // Receive message from the server
     int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
     if (bytesRead > 0) {
-        std::cout << "Received message from server: " << buffer << std::endl;
+        std::cout << "Received message from server: " << std::string(buffer, bytesRead) << std::endl;
     }
 }
 

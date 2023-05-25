@@ -48,20 +48,33 @@ bool SocketServer::listenForConnections() {
     return true;
 }
 
-void SocketServer::sendMessage(const std::string message) {
+void SocketServer::sendMessage(const std::string& message) {
     // Send message to the client
     std::cout << "Sending message to client: " << message << std::endl;
-    send(clientSocket, message.c_str(), message.length()+1, 0);
+    send(clientSocket, message.c_str(), message.size(), 0);
 }
 
 void SocketServer::receiveMessage() {
-    char buffer[1024];
+    size_t remainingBytes{0}, msgSize{0};
+
+    // Receive message size from the client
+    int bytesRead = recv(clientSocket, &msgSize, sizeof(msgSize), 0);
+    char *buffer = new char[msgSize];
+    remainingBytes = msgSize;
 
     // Receive message from the client
-    int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-    if (bytesRead > 0) {
-        std::cout << "Received message from client: " << buffer << std::endl;
+    while (remainingBytes > 0) {
+        bytesRead = recv(clientSocket, buffer, msgSize, 0);
+        if (bytesRead <= 0) {
+            break;
+        }
+
+        remainingBytes -= bytesRead;
     }
+
+    std::cout << "Received message from client (" << msgSize << " bytes). " << std::endl;
+
+    delete[] buffer;
 }
 
 void SocketServer::closeConnection() {
