@@ -9,19 +9,19 @@ set( SERVER_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/server)
 set( UTILS_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/utils)
 
 set( CLIENT_HEADERS 
-    ${CLIENT_INCLUDE_DIR}/socket/SocketClient.hpp
+    ${CLIENT_INCLUDE_DIR}/clients/SocketClient.hpp
     ${UTILS_INCLUDE_DIR}/Defines.hpp
     ${UTILS_INCLUDE_DIR}/Timer.hpp )
 set( CLIENT_SRCS 
     ${CLIENT_SRC_DIR}/main.cpp
-    ${CLIENT_SRC_DIR}/socket/SocketClient.cpp )
+    ${CLIENT_SRC_DIR}/clients/SocketClient.cpp )
 
 set( SERVER_HEADERS 
-    ${SERVER_INCLUDE_DIR}/socket/SocketServer.hpp
+    ${SERVER_INCLUDE_DIR}/servers/SocketServer.hpp
     ${UTILS_INCLUDE_DIR}/Defines.hpp )
 set( SERVER_SRCS 
     ${SERVER_SRC_DIR}/main.cpp
-    ${SERVER_SRC_DIR}/socket/SocketServer.cpp )
+    ${SERVER_SRC_DIR}/servers/SocketServer.cpp )
 
 add_executable( client ${CLIENT_SRCS} ${CLIENT_HEADERS} )
 target_include_directories(client PRIVATE ${CLIENT_INCLUDE_DIR} ${UTILS_INCLUDE_DIR})

@@ -1,4 +1,4 @@
-#include "socket/SocketServer.hpp"
+#include "servers/SocketServer.hpp"
 
 SocketServer::SocketServer(int port) {
     // Create a socket

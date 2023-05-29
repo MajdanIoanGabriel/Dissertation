@@ -1,6 +1,6 @@
 #include "Defines.hpp"
 #include "Thread.hpp"
-#include "socket/SocketServer.hpp"
+#include "servers/SocketServer.hpp"
 
 void runSocketServer() {
     SocketServer socketServer(PORT);

@@ -1,4 +1,4 @@
-#include "socket/SocketClient.hpp"
+#include "clients/SocketClient.hpp"
 #include "Timer.hpp"
 #include "Defines.hpp"
 

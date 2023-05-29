@@ -1,4 +1,4 @@
-#include "socket/SocketClient.hpp"
+#include "clients/SocketClient.hpp"
 
 SocketClient::SocketClient(const std::string ipAddress, int port) {
     // Create a socket
