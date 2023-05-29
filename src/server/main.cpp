@@ -1,8 +1,8 @@
-#include "socket/SocketServer.hpp"
 #include "Defines.hpp"
+#include "Thread.hpp"
+#include "socket/SocketServer.hpp"
 
-int main () 
-{
+void runSocketServer() {
     SocketServer socketServer(PORT);
     while(true) {
         if (socketServer.listenForConnections()) {
@@ -11,6 +11,10 @@ int main ()
             socketServer.closeConnection();
         }
     }
+}
 
+int main () 
+{
+    Thread socketThread(runSocketServer);
     return 0;
 }

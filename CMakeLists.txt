@@ -6,7 +6,6 @@ set( CLIENT_SRC_DIR ${CMAKE_SOURCE_DIR}/src/client)
 set( CLIENT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/client)
 set( SERVER_SRC_DIR ${CMAKE_SOURCE_DIR}/src/server)
 set( SERVER_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/server)
-set( UTILS_SRC_DIR ${CMAKE_SOURCE_DIR}/src/utils)
 set( UTILS_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/utils)
 
 set( CLIENT_HEADERS 
@@ -15,8 +14,7 @@ set( CLIENT_HEADERS
     ${UTILS_INCLUDE_DIR}/Timer.hpp )
 set( CLIENT_SRCS 
     ${CLIENT_SRC_DIR}/main.cpp
-    ${CLIENT_SRC_DIR}/socket/SocketClient.cpp
-    ${UTILS_SRC_DIR}/Timer.cpp )
+    ${CLIENT_SRC_DIR}/socket/SocketClient.cpp )
 
 set( SERVER_HEADERS 
     ${SERVER_INCLUDE_DIR}/socket/SocketServer.hpp
