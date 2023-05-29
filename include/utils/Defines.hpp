@@ -1,5 +1,5 @@
-#ifndef CLIENT_DEFINES
-#define CLIENT_DEFINES
+#ifndef UTILS_DEFINES
+#define UTILS_DEFINES
 
 #define IP_ADDRESS "127.0.0.1"
 #define PORT 3333

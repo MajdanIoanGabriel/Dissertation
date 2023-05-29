@@ -1,6 +1,5 @@
 #include "socket/SocketServer.hpp"
-
-#define PORT 3333
+#include "Defines.hpp"
 
 int main () 
 {

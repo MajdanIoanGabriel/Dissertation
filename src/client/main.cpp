@@ -1,6 +1,6 @@
 #include "socket/SocketClient.hpp"
-#include "utils/Timer.hpp"
-#include "utils/Defines.hpp"
+#include "Timer.hpp"
+#include "Defines.hpp"
 
 double sendClientMessage(size_t size) {
     SocketClient socketClient(IP_ADDRESS, PORT);

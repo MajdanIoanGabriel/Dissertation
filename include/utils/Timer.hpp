@@ -1,5 +1,5 @@
-#ifndef CLIENT_TIMER
-#define CLIENT_TIMER
+#ifndef UTILS_TIMER
+#define UTILS_TIMER
 
 #include <chrono>
 
