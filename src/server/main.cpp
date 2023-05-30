@@ -1,5 +1,6 @@
 #include "Defines.hpp"
 #include "Thread.hpp"
+#include "servers/ShmServer.hpp"
 #include "servers/SocketServer.hpp"
 
 void runSocketServer() {
@@ -13,8 +14,18 @@ void runSocketServer() {
     }
 }
 
+void runShmServer() {
+    ShmServer shmServer(MEGABYTE);
+    while (true) {
+        shmServer.waitForClient();
+        shmServer.readFromSharedMemory();
+        shmServer.writeToSharedMemory("Message received.");
+    }
+}
+
 int main () 
 {
-    Thread socketThread(runSocketServer);
+    // Thread socketThread(runSocketServer);
+    Thread shmThread(runShmServer);
     return 0;
 }
