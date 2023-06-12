@@ -19,27 +19,18 @@ void runSocketClient() {
     }
 }
 
-// double runShmClient(size_t size) {
-//     ShmClient shmClient(size);
-//     Timer timer;
-//     std::string message(size, '0');
+void runShmClient() {
+    ShmClient shmClient;
 
-//     timer.start();
-
-//     shmClient.writeToSharedMemory(message);
-//     shmClient.waitForServer();
-//     shmClient.readFromSharedMemory();
-
-//     timer.stop();
-//     std::cout << "Message (" << size << " bytes) sent, duration:" << timer.durationInMilliseconds() << "ms."<< std::endl;
-
-//     return timer.durationInMilliseconds();
-// }
+    for (size_t size: testedDurations) {
+        duration_map[size] = duration(shmClient, &ShmClient::writeToSharedMemory, size);
+        std::cout << "Message size: " << size << " sent in " << duration_map[size] << "us." << std::endl;
+    }
+}
 
 int main () 
 {
-    runSocketClient();
-
-    // (void)runShmClient(MEGABYTE);
+    // runSocketClient();
+    runShmClient();
     return 0;
 }

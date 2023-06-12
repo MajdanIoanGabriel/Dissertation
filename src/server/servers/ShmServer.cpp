@@ -1,11 +1,12 @@
 #include "servers/ShmServer.hpp"
+#include "Defines.hpp"
 
-ShmServer::ShmServer(size_t size) : sharedMemorySize(size) {
+ShmServer::ShmServer() {
     // Generate a unique key
     key_t key = ftok("shared_memory_key", 'R');
 
     // Create the shared memory segment
-    shmid = shmget(key, sharedMemorySize, IPC_CREAT | 0666);
+    shmid = shmget(key, MEGABYTE, IPC_CREAT | 0666);
     if (shmid == -1) {
         std::cerr << "Failed to create shared memory segment." << std::endl;
         exit(1);
@@ -17,9 +18,9 @@ ShmServer::ShmServer(size_t size) : sharedMemorySize(size) {
         std::cerr << "Failed to attach to shared memory segment." << std::endl;
         exit(1);
     }
-    
+
     // Clear the shared memory
-    std::memset(sharedMemory, 0, sharedMemorySize);
+    std::memset(sharedMemory, 0, MEGABYTE);
     
     // Create and initialize server semaphore
     sem_unlink("/server_semaphore");
@@ -54,19 +55,12 @@ ShmServer::~ShmServer() {
     shmctl(shmid, IPC_RMID, nullptr);
 }
 
-void ShmServer::waitForClient() {
+void ShmServer::readFromSharedMemory(size_t size) {
     // Wait for the client to write a message
     sem_wait(clientSemaphore);
-}
 
-void ShmServer::readFromSharedMemory() {
     std::cout << "Received message from client (" << std::string(sharedMemory).size() << " bytes). " << std::endl;
-}
 
-void ShmServer::writeToSharedMemory(const std::string& message) {
-    // Write the message to the shared memory
-    std::strncpy(sharedMemory, message.c_str(), sharedMemorySize);
-
-    // Signal the client that the message is ready
+    // Signal the client that the message has been read
     sem_post(serverSemaphore);
 }

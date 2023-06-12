@@ -15,17 +15,16 @@ void runSocketServer() {
 }
 
 void runShmServer() {
-    ShmServer shmServer(MEGABYTE);
-    while (true) {
-        shmServer.waitForClient();
-        shmServer.readFromSharedMemory();
-        shmServer.writeToSharedMemory("Message received.");
+    ShmServer shmServer;
+
+    for (size_t size: testedDurations) {
+        shmServer.readFromSharedMemory(size);
     }
 }
 
 int main () 
 {
-    runSocketServer();
-    // runShmServer();
+    // runSocketServer();
+    runShmServer();
     return 0;
 }
