@@ -1,16 +1,16 @@
 #include "Defines.hpp"
-#include "Thread.hpp"
 #include "servers/ShmServer.hpp"
 #include "servers/SocketServer.hpp"
 
 void runSocketServer() {
     SocketServer socketServer(PORT);
-    while(true) {
-        if (socketServer.listenForConnections()) {
-            socketServer.receiveMessage();
-            socketServer.sendMessage("Message received.");
-            socketServer.closeConnection();
+
+    if (socketServer.listenForConnections()) {
+        for (size_t size: testedDurations) {
+            socketServer.receiveMessage(size);
         }
+
+        socketServer.closeConnection();
     }
 }
 
@@ -25,7 +25,7 @@ void runShmServer() {
 
 int main () 
 {
-    // Thread socketThread(runSocketServer);
-    Thread shmThread(runShmServer);
+    runSocketServer();
+    // runShmServer();
     return 0;
 }

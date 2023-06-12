@@ -2,50 +2,44 @@
 #include "Timer.hpp"
 #include "clients/ShmClient.hpp"
 #include "clients/SocketClient.hpp"
+#include <map>
 
-double runSocketClient(size_t size) {
+using namespace timer;
+
+std::map<int, double> duration_map;
+
+void runSocketClient() {
     SocketClient socketClient(IP_ADDRESS, PORT);
-    Timer timer;
-    std::string message(size, '0');
-
-    timer.start();
 
     socketClient.connectToServer();
-    socketClient.sendMessage(message);
-    socketClient.receiveMessage();
 
-    timer.stop();
-    std::cout << "Message (" << size << " bytes) sent, duration:" << timer.durationInMilliseconds() << "ms."<< std::endl;
-
-    return timer.durationInMilliseconds();
+    for (size_t size: testedDurations) {
+        duration_map[size] = duration(socketClient, &SocketClient::sendMessage, size);
+        std::cout << "Message size: " << size << " sent in " << duration_map[size] << "us." << std::endl;
+    }
 }
 
-double runShmClient(size_t size) {
-    ShmClient shmClient(size);
-    Timer timer;
-    std::string message(size, '0');
+// double runShmClient(size_t size) {
+//     ShmClient shmClient(size);
+//     Timer timer;
+//     std::string message(size, '0');
 
-    timer.start();
+//     timer.start();
 
-    shmClient.writeToSharedMemory(message);
-    shmClient.waitForServer();
-    shmClient.readFromSharedMemory();
+//     shmClient.writeToSharedMemory(message);
+//     shmClient.waitForServer();
+//     shmClient.readFromSharedMemory();
 
-    timer.stop();
-    std::cout << "Message (" << size << " bytes) sent, duration:" << timer.durationInMilliseconds() << "ms."<< std::endl;
+//     timer.stop();
+//     std::cout << "Message (" << size << " bytes) sent, duration:" << timer.durationInMilliseconds() << "ms."<< std::endl;
 
-    return timer.durationInMilliseconds();
-}
+//     return timer.durationInMilliseconds();
+// }
 
 int main () 
 {
-    // (void)runSocketClient(KILOBYTE);
-    // (void)runSocketClient(MEGABYTE);
-    // (void)runSocketClient(10*MEGABYTE);
-    // (void)runSocketClient(20*MEGABYTE);
-    // (void)runSocketClient(100*MEGABYTE);
-    // (void)runSocketClient(GIGABYTE);
+    runSocketClient();
 
-    (void)runShmClient(MEGABYTE);
+    // (void)runShmClient(MEGABYTE);
     return 0;
 }

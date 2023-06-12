@@ -2,33 +2,21 @@
 #define UTILS_TIMER
 
 #include <chrono>
+#include <functional>
 
-class Timer {
-private:
-    std::chrono::high_resolution_clock::time_point start_time;
-    std::chrono::high_resolution_clock::time_point end_time;
+namespace timer {
 
-public:
-    Timer() {}
-    ~Timer() {}
+    template <typename Obj, typename Func, typename... Args>
+    double duration(Obj obj, Func func, Args&&... args)
+    {
+        auto start = std::chrono::high_resolution_clock::now();
+        std::invoke(func, obj, std::forward<Args>(args)...);  // Execute the member function on the given object with arguments
+        auto end = std::chrono::high_resolution_clock::now();
 
-    void start() {
-        start_time = std::chrono::high_resolution_clock::now();
-    }
-
-    void stop() {
-        end_time = std::chrono::high_resolution_clock::now();
-    }
-
-    double durationInSeconds() const {
-        std::chrono::duration<double> duration = end_time - start_time;
+        std::chrono::duration<double, std::micro> duration = end - start;
         return duration.count();
     }
 
-    double durationInMilliseconds() const {
-        std::chrono::duration<double, std::milli> duration = end_time - start_time;
-        return duration.count();
-    }
-};
+}
 
 #endif
