@@ -1,4 +1,5 @@
 #include "Defines.hpp"
+#include "servers/PipeServer.hpp"
 #include "servers/ShmServer.hpp"
 #include "servers/SocketServer.hpp"
 
@@ -22,9 +23,21 @@ void runShmServer() {
     }
 }
 
+void runPipeServer() {
+    PipeServer pipeServer(testedDurations.size());
+    pipeServer.start();
+
+    while (pipeServer.isRunning()) {
+        pipeServer.receiveMessage();
+    }
+
+    pipeServer.stop();
+}
+
 int main () 
 {
     // runSocketServer();
-    runShmServer();
+    // runShmServer();
+    runPipeServer();
     return 0;
 }

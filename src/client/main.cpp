@@ -1,5 +1,6 @@
 #include "Defines.hpp"
 #include "Timer.hpp"
+#include "clients/PipeClient.hpp"
 #include "clients/ShmClient.hpp"
 #include "clients/SocketClient.hpp"
 #include <map>
@@ -28,9 +29,19 @@ void runShmClient() {
     }
 }
 
+void runPipeClient() {
+    PipeClient pipeClient;
+
+    for (size_t size: testedDurations) {
+        duration_map[size] = duration(pipeClient, &PipeClient::sendMessage, size);
+        std::cout << "Message size: " << size << " sent in " << duration_map[size] << "us." << std::endl;
+    }
+}
+
 int main () 
 {
     // runSocketClient();
-    runShmClient();
+    // runShmClient();
+    runPipeClient();
     return 0;
 }
