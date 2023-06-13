@@ -1,4 +1,5 @@
 #include "Defines.hpp"
+#include "servers/MsgQueueServer.hpp"
 #include "servers/PipeServer.hpp"
 #include "servers/ShmServer.hpp"
 #include "servers/SocketServer.hpp"
@@ -34,10 +35,20 @@ void runPipeServer() {
     pipeServer.stop();
 }
 
+void runMsgQueueServer() {
+    MsgQueueServer msgQueueServer(1234);
+    msgQueueServer.createQueue();
+
+    for (size_t size: testedDurations) {
+        msgQueueServer.receiveMessage(size);
+    }
+}
+
 int main () 
 {
     // runSocketServer();
     // runShmServer();
-    runPipeServer();
+    // runPipeServer();
+    runMsgQueueServer();
     return 0;
 }
