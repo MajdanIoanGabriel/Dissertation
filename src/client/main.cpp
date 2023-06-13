@@ -1,31 +1,47 @@
-#include "socket/SocketClient.hpp"
-#include "utils/Timer.hpp"
-#include "utils/Defines.hpp"
+#include "Defines.hpp"
+#include "Timer.hpp"
+#include "clients/PipeClient.hpp"
+#include "clients/ShmClient.hpp"
+#include "clients/SocketClient.hpp"
+#include <map>
 
-double sendClientMessage(size_t size) {
+using namespace timer;
+
+std::map<int, double> duration_map;
+
+void runSocketClient() {
     SocketClient socketClient(IP_ADDRESS, PORT);
-    Timer socketTimer;
-    std::string message(size, '0');
-
-    socketTimer.start();
 
     socketClient.connectToServer();
-    socketClient.sendMessage(message);
-    socketClient.receiveMessage();
 
-    socketTimer.stop();
-    std::cout << "Message (" << size << " bytes) sent, duration:" << socketTimer.durationInMilliseconds() << "ms."<< std::endl;
+    for (size_t size: testedDurations) {
+        duration_map[size] = duration(socketClient, &SocketClient::sendMessage, size);
+        std::cout << "Message size: " << size << " sent in " << duration_map[size] << "us." << std::endl;
+    }
+}
 
-    return socketTimer.durationInMilliseconds();
+void runShmClient() {
+    ShmClient shmClient;
+
+    for (size_t size: testedDurations) {
+        duration_map[size] = duration(shmClient, &ShmClient::writeToSharedMemory, size);
+        std::cout << "Message size: " << size << " sent in " << duration_map[size] << "us." << std::endl;
+    }
+}
+
+void runPipeClient() {
+    PipeClient pipeClient;
+
+    for (size_t size: testedDurations) {
+        duration_map[size] = duration(pipeClient, &PipeClient::sendMessage, size);
+        std::cout << "Message size: " << size << " sent in " << duration_map[size] << "us." << std::endl;
+    }
 }
 
 int main () 
 {
-    (void)sendClientMessage(KILOBYTE);
-    (void)sendClientMessage(MEGABYTE);
-    (void)sendClientMessage(10*MEGABYTE);
-    (void)sendClientMessage(20*MEGABYTE);
-    (void)sendClientMessage(100*MEGABYTE);
-    (void)sendClientMessage(GIGABYTE);
+    // runSocketClient();
+    // runShmClient();
+    runPipeClient();
     return 0;
 }

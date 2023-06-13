@@ -17,8 +17,7 @@ public:
     ~SocketClient();
 
     void connectToServer();
-    void sendMessage(const std::string& message);
-    void receiveMessage();
+    void sendMessage(const size_t size);
     void closeConnection();
 };
 

@@ -1,17 +1,43 @@
-#include "socket/SocketServer.hpp"
+#include "Defines.hpp"
+#include "servers/PipeServer.hpp"
+#include "servers/ShmServer.hpp"
+#include "servers/SocketServer.hpp"
 
-#define PORT 3333
+void runSocketServer() {
+    SocketServer socketServer(PORT);
+
+    if (socketServer.listenForConnections()) {
+        for (size_t size: testedDurations) {
+            socketServer.receiveMessage(size);
+        }
+
+        socketServer.closeConnection();
+    }
+}
+
+void runShmServer() {
+    ShmServer shmServer;
+
+    for (size_t size: testedDurations) {
+        shmServer.readFromSharedMemory(size);
+    }
+}
+
+void runPipeServer() {
+    PipeServer pipeServer(testedDurations.size());
+    pipeServer.start();
+
+    while (pipeServer.isRunning()) {
+        pipeServer.receiveMessage();
+    }
+
+    pipeServer.stop();
+}
 
 int main () 
 {
-    SocketServer socketServer(PORT);
-    while(true) {
-        if (socketServer.listenForConnections()) {
-            socketServer.receiveMessage();
-            socketServer.sendMessage("Message received.");
-            socketServer.closeConnection();
-        }
-    }
-
+    // runSocketServer();
+    // runShmServer();
+    runPipeServer();
     return 0;
 }

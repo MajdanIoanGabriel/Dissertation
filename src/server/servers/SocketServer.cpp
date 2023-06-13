@@ -1,4 +1,4 @@
-#include "socket/SocketServer.hpp"
+#include "servers/SocketServer.hpp"
 
 SocketServer::SocketServer(int port) {
     // Create a socket
@@ -48,19 +48,10 @@ bool SocketServer::listenForConnections() {
     return true;
 }
 
-void SocketServer::sendMessage(const std::string& message) {
-    // Send message to the client
-    std::cout << "Sending message to client: " << message << std::endl;
-    send(clientSocket, message.c_str(), message.size(), 0);
-}
-
-void SocketServer::receiveMessage() {
-    size_t remainingBytes{0}, msgSize{0};
-
-    // Receive message size from the client
-    int bytesRead = recv(clientSocket, &msgSize, sizeof(msgSize), 0);
+void SocketServer::receiveMessage(size_t msgSize) {
+    size_t remainingBytes = msgSize;
+    int bytesRead;
     char *buffer = new char[msgSize];
-    remainingBytes = msgSize;
 
     // Receive message from the client
     while (remainingBytes > 0) {
