@@ -8,6 +8,12 @@
 
 #define PIPENAME "build/named_pipe"
 
+#define SOCKET_JSON "json/socket.json"
+#define SHM_JSON "json/shm.json"
+#define PIPE_JSON "json/pipe.json"
+#define MSGQUEUE_JSON "json/msgqueue.json"
+#define FILE_JSON "json/file.json"
+
 #define KILOBYTE 1024
 #define MEGABYTE 1024*1024
 #define GIGABYTE 1024*1024*1024

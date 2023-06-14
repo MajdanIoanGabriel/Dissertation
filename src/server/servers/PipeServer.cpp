@@ -7,7 +7,6 @@ PipeServer::PipeServer(int expectedMsg): expectedMessages(expectedMsg), received
 
 PipeServer::~PipeServer() {
     stop();
-    unlink(pipeName.c_str());
 }
 
 void PipeServer::createPipe() {
@@ -33,6 +32,7 @@ void PipeServer::start() {
 void PipeServer::stop() {
     _isRunning = false;
     close(pipefd);
+    unlink(pipeName.c_str());
 }
 
 bool PipeServer::isRunning() {
@@ -40,13 +40,14 @@ bool PipeServer::isRunning() {
 }
 
 void PipeServer::receiveMessage() {
-    size_t size = testedDurations[receivedMessages];
+    size_t size = testedDurations[receivedMessages % (testedDurations.size())];
     char buffer[size];
     ssize_t bytesRead;
     std::string message;
 
-    while ((bytesRead = read(pipefd, buffer, sizeof(buffer))) > 0) {
-        message.append(buffer, bytesRead);
+    while ((bytesRead = read(pipefd, buffer, sizeof(buffer))) != 0) {
+        if(bytesRead != -1)
+            message.append(buffer, bytesRead);
 
         if (message.size() == size) {
             // Complete message received

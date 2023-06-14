@@ -15,6 +15,7 @@ set( CLIENT_HEADERS
     ${CLIENT_INCLUDE_DIR}/clients/ShmClient.hpp
     ${CLIENT_INCLUDE_DIR}/clients/SocketClient.hpp
     ${UTILS_INCLUDE_DIR}/Defines.hpp
+    ${UTILS_INCLUDE_DIR}/Json.hpp
     ${UTILS_INCLUDE_DIR}/Timer.hpp )
 set( CLIENT_SRCS 
     ${CLIENT_SRC_DIR}/main.cpp
@@ -41,6 +42,7 @@ set( SERVER_SRCS
 
 add_executable( client ${CLIENT_SRCS} ${CLIENT_HEADERS} )
 target_include_directories(client PRIVATE ${CLIENT_INCLUDE_DIR} ${UTILS_INCLUDE_DIR})
+# target_link_libraries(client PRIVATE jsoncpp)
 
 add_executable( server ${SERVER_SRCS} ${SERVER_HEADERS} )
 target_include_directories(server PRIVATE ${SERVER_INCLUDE_DIR} ${UTILS_INCLUDE_DIR})
