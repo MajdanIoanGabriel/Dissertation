@@ -1,5 +1,6 @@
 #include "Defines.hpp"
 #include "Timer.hpp"
+#include "clients/FileClient.hpp"
 #include "clients/MsgQueueClient.hpp"
 #include "clients/PipeClient.hpp"
 #include "clients/ShmClient.hpp"
@@ -49,11 +50,21 @@ void runMsgQueueClient() {
     }
 }
 
+void runFileClient() {
+    FileClient fileClient("communication.txt");
+
+    for (size_t size: testedDurations) {
+        duration_map[size] = duration(fileClient, &FileClient::sendMessage, size);
+        std::cout << "Message size: " << size << " sent in " << duration_map[size] << "us." << std::endl;
+    }
+}
+
 int main () 
 {
     // runSocketClient();
     // runShmClient();
     // runPipeClient();
-    runMsgQueueClient();
+    // runMsgQueueClient();
+    runFileClient();
     return 0;
 }
