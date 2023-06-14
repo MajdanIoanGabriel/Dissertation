@@ -9,6 +9,7 @@ set( SERVER_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/server)
 set( UTILS_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/utils)
 
 set( CLIENT_HEADERS 
+    ${CLIENT_INCLUDE_DIR}/clients/FileClient.hpp
     ${CLIENT_INCLUDE_DIR}/clients/MsgQueueClient.hpp
     ${CLIENT_INCLUDE_DIR}/clients/PipeClient.hpp
     ${CLIENT_INCLUDE_DIR}/clients/ShmClient.hpp
@@ -17,12 +18,14 @@ set( CLIENT_HEADERS
     ${UTILS_INCLUDE_DIR}/Timer.hpp )
 set( CLIENT_SRCS 
     ${CLIENT_SRC_DIR}/main.cpp
+    ${CLIENT_SRC_DIR}/clients/FileClient.cpp
     ${CLIENT_SRC_DIR}/clients/MsgQueueClient.cpp
     ${CLIENT_SRC_DIR}/clients/PipeClient.cpp
     ${CLIENT_SRC_DIR}/clients/ShmClient.cpp
     ${CLIENT_SRC_DIR}/clients/SocketClient.cpp )
 
 set( SERVER_HEADERS 
+    ${SERVER_INCLUDE_DIR}/servers/FileServer.hpp
     ${SERVER_INCLUDE_DIR}/servers/MsgQueueServer.hpp
     ${SERVER_INCLUDE_DIR}/servers/PipeServer.hpp
     ${SERVER_INCLUDE_DIR}/servers/ShmServer.hpp
@@ -30,6 +33,7 @@ set( SERVER_HEADERS
     ${UTILS_INCLUDE_DIR}/Defines.hpp )
 set( SERVER_SRCS 
     ${SERVER_SRC_DIR}/main.cpp
+    ${SERVER_SRC_DIR}/servers/FileServer.cpp
     ${SERVER_SRC_DIR}/servers/MsgQueueServer.cpp
     ${SERVER_SRC_DIR}/servers/PipeServer.cpp
     ${SERVER_SRC_DIR}/servers/ShmServer.cpp

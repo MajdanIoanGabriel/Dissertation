@@ -1,4 +1,5 @@
 #include "Defines.hpp"
+#include "servers/FileServer.hpp"
 #include "servers/MsgQueueServer.hpp"
 #include "servers/PipeServer.hpp"
 #include "servers/ShmServer.hpp"
@@ -44,11 +45,20 @@ void runMsgQueueServer() {
     }
 }
 
+void runFileServer() {
+    FileServer fileServer("communication.txt");
+
+    for (size_t size: testedDurations) {
+        fileServer.receiveMessage();
+    }
+}
+
 int main () 
 {
     // runSocketServer();
     // runShmServer();
     // runPipeServer();
-    runMsgQueueServer();
+    // runMsgQueueServer();
+    runFileServer();
     return 0;
 }
