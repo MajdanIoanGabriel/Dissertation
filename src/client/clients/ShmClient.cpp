@@ -47,7 +47,7 @@ void ShmClient::writeToSharedMemory(const size_t size) {
     std::string message(size, '0');
 
     // Write the message to the shared memory
-    std::strncpy(sharedMemory, message.c_str(), size);
+    std::strncpy(sharedMemory, message.c_str(), size+1);
 
     // Signal the server that the message is ready
     sem_post(clientSemaphore);
