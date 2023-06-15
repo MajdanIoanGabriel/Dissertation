@@ -61,10 +61,10 @@ void runFileServer(int cycles=1) {
 
 int main () 
 {
-    // runSocketServer(10);
+    runSocketServer(10);
     // runShmServer(10);
     // runPipeServer(10);
     // runMsgQueueServer(10);
-    runFileServer(10);
+    // runFileServer(10);
     return 0;
 }

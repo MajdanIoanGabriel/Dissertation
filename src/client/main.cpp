@@ -88,10 +88,10 @@ void runFileClient(int cycles=1) {
 
 int main () 
 {
-    // runSocketClient(10);
+    runSocketClient(10);
     // runShmClient(10);
     // runPipeClient(10);
     // runMsgQueueClient(10);
-    runFileClient(10);
+    // runFileClient(10);
     return 0;
 }
