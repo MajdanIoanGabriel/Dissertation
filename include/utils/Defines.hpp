@@ -18,6 +18,6 @@
 #define MEGABYTE 1024*1024
 #define GIGABYTE 1024*1024*1024
 
-static std::vector<unsigned long> testedDurations = {1, 4, 16, 64, 256, 1*KILOBYTE, 4*KILOBYTE, 16*KILOBYTE, 64*KILOBYTE, 256*KILOBYTE};
+static std::vector<unsigned long> testedDurations = {1, 4, 16, 64, 256, 1*KILOBYTE, 4*KILOBYTE, 16*KILOBYTE, 64*KILOBYTE, 256*KILOBYTE, 512*KILOBYTE};
 
 #endif
