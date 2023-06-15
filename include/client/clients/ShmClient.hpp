@@ -19,7 +19,7 @@ public:
     ShmClient();
     ~ShmClient();
 
-    void writeToSharedMemory(const size_t size);
+    void writeToSharedMemory(const size_t size, const std::string& message);
 };
 
 #endif

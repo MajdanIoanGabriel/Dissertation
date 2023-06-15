@@ -19,8 +19,7 @@ void PipeClient::openPipe() {
     }
 }
 
-void PipeClient::sendMessage(const size_t size) {
-    std::string message(size, '0');
+void PipeClient::sendMessage(const size_t size, const std::string& message) {
     ssize_t bytesWritten = write(pipefd, message.c_str(), message.length());
 
     if (bytesWritten == -1) {

@@ -12,7 +12,7 @@ class PipeClient {
 public:
     PipeClient();
     ~PipeClient();
-    void sendMessage(const size_t size);
+    void sendMessage(const size_t size, const std::string& message);
 
 private:
     int pipefd;

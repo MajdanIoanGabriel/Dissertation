@@ -11,7 +11,7 @@ public:
     FileClient(const std::string& filePath);
     ~FileClient();
 
-    void sendMessage(const size_t size);
+    void sendMessage(const size_t size, const std::string& message);
 
 private:
     std::string filePath_;

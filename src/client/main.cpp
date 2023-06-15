@@ -20,8 +20,8 @@ void runSocketClient(int cycles=1) {
     socketClient.connectToServer();
 
     for (int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
-            duration_map[size].push_back(duration(socketClient, &SocketClient::sendMessage, size));
+        for (size_t size: testedMessageSizes) {
+            duration_map[size].push_back(duration(socketClient, &SocketClient::sendMessage, size, testedMessages[size]));
             std::cout << "Message size: " << size << " sent in " << duration_map[size].back() << "us." << std::endl;
         }
     }
@@ -34,8 +34,8 @@ void runShmClient(int cycles=1) {
     ShmClient shmClient;
 
     for (int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
-            duration_map[size].push_back(duration(shmClient, &ShmClient::writeToSharedMemory, size));
+        for (size_t size: testedMessageSizes) {
+            duration_map[size].push_back(duration(shmClient, &ShmClient::writeToSharedMemory, size, testedMessages[size]));
             std::cout << "Message size: " << size << " sent in " << duration_map[size].back() << "us." << std::endl;
         }
     }
@@ -48,8 +48,8 @@ void runPipeClient(int cycles=1) {
     PipeClient pipeClient;
 
     for (int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
-            duration_map[size].push_back(duration(pipeClient, &PipeClient::sendMessage, size));
+        for (size_t size: testedMessageSizes) {
+            duration_map[size].push_back(duration(pipeClient, &PipeClient::sendMessage, size, testedMessages[size]));
             std::cout << "Message size: " << size << " sent in " << duration_map[size].back() << "us." << std::endl;
         }
     }
@@ -63,8 +63,8 @@ void runMsgQueueClient(int cycles=1) {
     msgQueueClient.connectToQueue();
 
     for (int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
-            duration_map[size].push_back(duration(msgQueueClient, &MsgQueueClient::sendMessage, size));
+        for (size_t size: testedMessageSizes) {
+            duration_map[size].push_back(duration(msgQueueClient, &MsgQueueClient::sendMessage, size, testedMessages[size]));
             std::cout << "Message size: " << size << " sent in " << duration_map[size].back() << "us." << std::endl;
         }
     }
@@ -77,8 +77,8 @@ void runFileClient(int cycles=1) {
     FileClient fileClient("communication.txt");
 
     for (int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
-            duration_map[size].push_back(duration(fileClient, &FileClient::sendMessage, size));
+        for (size_t size: testedMessageSizes) {
+            duration_map[size].push_back(duration(fileClient, &FileClient::sendMessage, size, testedMessages[size]));
             std::cout << "Message size: " << size << " sent in " << duration_map[size].back() << "us." << std::endl;
         }
     }
@@ -96,6 +96,10 @@ int main (int argc, char** argv)
 
     std::string IPCName = argv[1];
     int runCycles = std::atoi(argv[2]);
+
+    for(size_t size: testedMessageSizes) {
+        testedMessages.emplace(size, std::string(size, '0'));
+    }
 
     if (IPCName == "socket")
         runSocketClient(runCycles);

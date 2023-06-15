@@ -12,8 +12,7 @@ void MsgQueueClient::connectToQueue() {
     std::cout << "mQueueId = " << mQueueId << std::endl;
 }
 
-void MsgQueueClient::sendMessage(const size_t size) {
-    std::string message(size, '0');
+void MsgQueueClient::sendMessage(const size_t size, const std::string& message) {
     Message msg;
     msg.mType = 1;
     strncpy(msg.mData, message.c_str(), size+1);

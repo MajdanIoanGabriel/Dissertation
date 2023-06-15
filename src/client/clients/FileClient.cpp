@@ -16,9 +16,7 @@ FileClient::~FileClient() {
     file.close();
 }
 
-void FileClient::sendMessage(const size_t size) {
-    std::string message(size, '0');
-
+void FileClient::sendMessage(const size_t size, const std::string& message) {
     file << message << std::endl;
     file.flush();
     

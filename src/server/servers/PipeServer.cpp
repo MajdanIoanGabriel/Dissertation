@@ -40,7 +40,7 @@ bool PipeServer::isRunning() {
 }
 
 void PipeServer::receiveMessage() {
-    size_t size = testedDurations[receivedMessages % (testedDurations.size())];
+    size_t size = testedMessageSizes[receivedMessages % (testedMessageSizes.size())];
     char buffer[size];
     ssize_t bytesRead;
     std::string message;

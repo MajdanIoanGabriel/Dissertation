@@ -31,9 +31,7 @@ void SocketClient::connectToServer() {
     std::cout << "Connected to the server." << std::endl;
 }
 
-void SocketClient::sendMessage(const size_t size) {
-    std::string message(size, '0');
-
+void SocketClient::sendMessage(const size_t size, const std::string& message) {
     // Send message to the server
     std::cout << "Sending message to server..." << std::endl;
     send(clientSocket, message.c_str(), size, 0);
