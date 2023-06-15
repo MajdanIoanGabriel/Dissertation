@@ -59,12 +59,28 @@ void runFileServer(int cycles=1) {
     }
 }
 
-int main () 
+int main (int argc, char** argv) 
 {
-    // runSocketServer(10);
-    // runShmServer(10);
-    // runPipeServer(10);
-    // runMsgQueueServer(10);
-    runFileServer(10);
+    if (argc != 3)
+    {
+        std::cout << "Usage: server <ipc_name> <run_cycles>" << std::endl;
+        return 1;
+    }
+
+    std::string IPCName = argv[1];
+    int runCycles = std::atoi(argv[2]);
+
+    if (IPCName == "socket")
+        runSocketServer(runCycles);
+    else if (IPCName == "shm")
+        runShmServer(runCycles);
+    else if (IPCName == "pipe")
+        runPipeServer(runCycles);
+    else if (IPCName == "msgqueue")
+        runMsgQueueServer(runCycles);
+    else if (IPCName == "file")
+        runFileServer(runCycles);
+    else std::cout << "Invalid IPC name" << std::endl;
+
     return 0;
 }
