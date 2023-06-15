@@ -86,12 +86,28 @@ void runFileClient(int cycles=1) {
     writeToJSON(FILE_JSON, duration_map);
 }
 
-int main () 
+int main (int argc, char** argv) 
 {
-    runSocketClient(10);
-    // runShmClient(10);
-    // runPipeClient(10);
-    // runMsgQueueClient(10);
-    // runFileClient(10);
+    if (argc != 3)
+    {
+        std::cout << "Usage: client <ipc_name> <run_cycles>" << std::endl;
+        return 1;
+    }
+
+    std::string IPCName = argv[1];
+    int runCycles = std::atoi(argv[2]);
+
+    if (IPCName == "socket")
+        runSocketClient(runCycles);
+    else if (IPCName == "shm")
+        runShmClient(runCycles);
+    else if (IPCName == "pipe")
+        runPipeClient(runCycles);
+    else if (IPCName == "msgqueue")
+        runMsgQueueClient(runCycles);
+    else if (IPCName == "file")
+        runFileClient(runCycles);
+    else std::cout << "Invalid IPC name" << std::endl;
+    
     return 0;
 }
