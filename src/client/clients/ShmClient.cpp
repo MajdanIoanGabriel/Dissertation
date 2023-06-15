@@ -43,9 +43,7 @@ ShmClient::~ShmClient() {
     shmdt(sharedMemory);
 }
 
-void ShmClient::writeToSharedMemory(const size_t size) {
-    std::string message(size, '0');
-
+void ShmClient::writeToSharedMemory(const size_t size, const std::string& message) {
     // Write the message to the shared memory
     std::strncpy(sharedMemory, message.c_str(), size+1);
 

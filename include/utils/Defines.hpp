@@ -1,6 +1,8 @@
 #ifndef UTILS_DEFINES
 #define UTILS_DEFINES
 
+#include <map>
+#include <string>
 #include <vector>
 
 #define IP_ADDRESS "127.0.0.1"
@@ -18,6 +20,7 @@
 #define MEGABYTE 1024*1024
 #define GIGABYTE 1024*1024*1024
 
-static std::vector<unsigned long> testedDurations = {1, 4, 16, 64, 256, 1*KILOBYTE, 4*KILOBYTE, 16*KILOBYTE, 64*KILOBYTE, 256*KILOBYTE, 512*KILOBYTE};
+static std::vector<unsigned long> testedMessageSizes = {1, 4, 16, 64, 256, 1*KILOBYTE, 4*KILOBYTE, 16*KILOBYTE, 64*KILOBYTE, 256*KILOBYTE, 512*KILOBYTE};
+static std::map<unsigned long, std::string> testedMessages;
 
 #endif

@@ -10,7 +10,7 @@ void runSocketServer(int cycles=1) {
 
     if (socketServer.listenForConnections()) {
         for(int i=0; i<cycles; i++) {
-            for (size_t size: testedDurations) {
+            for (size_t size: testedMessageSizes) {
                 socketServer.receiveMessage(size);
             }
         }
@@ -23,14 +23,14 @@ void runShmServer(int cycles=1) {
     ShmServer shmServer;
 
     for(int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
+        for (size_t size: testedMessageSizes) {
             shmServer.readFromSharedMemory(size);
         }
     }
 }
 
 void runPipeServer(int cycles=1) {
-    PipeServer pipeServer(testedDurations.size()*cycles);
+    PipeServer pipeServer(testedMessageSizes.size()*cycles);
     pipeServer.start();
 
     while (pipeServer.isRunning()) {
@@ -43,7 +43,7 @@ void runMsgQueueServer(int cycles=1) {
     msgQueueServer.createQueue();
 
     for(int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
+        for (size_t size: testedMessageSizes) {
             msgQueueServer.receiveMessage(size);
         }
     }
@@ -53,7 +53,7 @@ void runFileServer(int cycles=1) {
     FileServer fileServer("communication.txt");
 
     for(int i=0; i<cycles; i++) {
-        for (size_t size: testedDurations) {
+        for (size_t size: testedMessageSizes) {
             fileServer.receiveMessage();
         }
     }

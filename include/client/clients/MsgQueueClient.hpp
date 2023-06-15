@@ -22,7 +22,7 @@ private:
 public:
     MsgQueueClient(key_t key);
     void connectToQueue();
-    void sendMessage(const size_t size);
+    void sendMessage(const size_t size, const std::string& message);
 };
 
 #endif
