@@ -1,14 +1,14 @@
 #include <map>
 #include <vector>
 
+#include "Defines.hpp"
+#include "Json.hpp"
+#include "Timer.hpp"
 #include "clients/FileClient.hpp"
 #include "clients/MsgQueueClient.hpp"
 #include "clients/PipeClient.hpp"
 #include "clients/ShmClient.hpp"
 #include "clients/SocketClient.hpp"
-#include "Defines.hpp"
-#include "Json.hpp"
-#include "Timer.hpp"
 
 using namespace json;
 using namespace timer;
