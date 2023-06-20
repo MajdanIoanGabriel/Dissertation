@@ -22,11 +22,6 @@ In terminal, run this to configure cmake:
 cmake -S . -B build
 ```
 
-Make the directory needed to save in json:
-```bash
-mkdir build/json
-```
-
 In order for the message queue server to work, you need to increase the max message size to 1MB.
 Open /etc/sysctl.conf and add the following lines:
 ```
