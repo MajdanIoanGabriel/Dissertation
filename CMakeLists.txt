@@ -40,9 +40,10 @@ set( SERVER_SRCS
     ${SERVER_SRC_DIR}/servers/ShmServer.cpp
     ${SERVER_SRC_DIR}/servers/SocketServer.cpp )
 
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/json)
+
 add_executable( client ${CLIENT_SRCS} ${CLIENT_HEADERS} )
 target_include_directories(client PRIVATE ${CLIENT_INCLUDE_DIR} ${UTILS_INCLUDE_DIR})
-# target_link_libraries(client PRIVATE jsoncpp)
 
 add_executable( server ${SERVER_SRCS} ${SERVER_HEADERS} )
 target_include_directories(server PRIVATE ${SERVER_INCLUDE_DIR} ${UTILS_INCLUDE_DIR})
